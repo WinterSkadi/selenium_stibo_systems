@@ -4,24 +4,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class GoogleSearchPage {
+public class GoogleSearchPage extends BasePage {
     private static final By inputBox = By.id("lst-ib");
     private static final By submitButton = By.name("btnK");
 
-    private final WebDriver driver;
-    private final WebDriverWait webDriverWait;
-
-    public GoogleSearchPage(final WebDriver driver, final WebDriverWait webDriverWait) {
-        this.driver = driver;
-        this.webDriverWait = webDriverWait;
+    public GoogleSearchPage(final WebDriver driver, final WebDriverWait webDriverWait, final FluentWait fluentWait) {
+        super(driver, webDriverWait, fluentWait);
     }
 
     public GoogleSearchResultsPage searchText(final String inputText) {
         fillGoogleSearchInput(inputText);
         submitSearch();
-        return new GoogleSearchResultsPage(driver, webDriverWait);
+        return new GoogleSearchResultsPage(driver, webDriverWait, fluentWait);
     }
 
     private void fillGoogleSearchInput(final String inputText) {

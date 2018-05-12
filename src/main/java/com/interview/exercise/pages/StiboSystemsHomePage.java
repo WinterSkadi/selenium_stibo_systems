@@ -3,7 +3,7 @@ package com.interview.exercise.pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
-public class StiboSystemsHomePage {
+public class StiboSystemsHomePage extends BasePage {
     private final String stiboSearchInput = "energy";
     private static final By searchButton = By.className("search");
     private static final By searchInput = By.id("search-input");
@@ -12,12 +12,9 @@ public class StiboSystemsHomePage {
     private static final By nextPage = By.xpath("//li[@class = 'ais-pagination--item ais-pagination--item__next']");
     private static final By currentResultPageNumber = By.xpath("//li[@class='ais-pagination--item ais-pagination--item__page ais-pagination--item__active']/a");
 
-    private final WebDriver driver;
-    private final WebDriverWait webDriverWait;
-
-    public StiboSystemsHomePage(final WebDriver driver, final WebDriverWait webDriverWait) {
-        this.driver = driver;
-        this.webDriverWait = webDriverWait;
+    public StiboSystemsHomePage(final WebDriver driver, final WebDriverWait webDriverWait, final FluentWait fluentWait) {
+        super(driver, webDriverWait, fluentWait);
+        driver.getWindowHandles();
     }
 
     public StiboSystemsHomePage searchText() throws InterruptedException {
@@ -44,11 +41,16 @@ public class StiboSystemsHomePage {
 
     public StiboSystemsAboutUsPage goToAboutPage() {
         driver.findElement(aboutUsResult).click();
-        return new StiboSystemsAboutUsPage(driver, webDriverWait);
+        return new StiboSystemsAboutUsPage(driver, webDriverWait, fluentWait);
     }
 
     private boolean elementExists(By selector) {
-        return driver.findElements(selector).size() > 0;
+        try {
+            fluentWait.until(ExpectedConditions.elementToBeClickable(selector));
+            return true;
+        } catch (TimeoutException timeoutException) {
+            return false;
+        }
     }
 
     private void clickSearchIcon() {
@@ -56,14 +58,14 @@ public class StiboSystemsHomePage {
         searchIcon.click();
     }
 
-    private void searchSpecifiedText() throws InterruptedException {
+    private void searchSpecifiedText() {
         WebElement searchBox = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
-        searchBox.sendKeys(stiboSearchInput);
-        Thread.sleep(2000);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value = arguments[1]", searchBox, stiboSearchInput.substring(0, stiboSearchInput.length() - 1));
+        searchBox.sendKeys(stiboSearchInput.substring(stiboSearchInput.length() - 1));
     }
 
     public int getSearchResultCount() {
-        WebElement searchResultsBox = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(numberOfResults));
+        WebElement searchResultsBox = webDriverWait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(numberOfResults)));
         String resultsText = searchResultsBox.getText();
         String resultsCount = resultsText.split(" ")[0];
         return Integer.parseInt(resultsCount);
