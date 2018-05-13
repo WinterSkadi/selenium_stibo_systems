@@ -67,7 +67,16 @@ public class StiboSystemsHomePage extends BasePage {
 
     private void searchSpecifiedText(final String searchText) {
         WebElement searchBox = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(SEARCH_INPUT_BOX));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].value = arguments[1]", searchBox, searchText.substring(0, searchText.length() - 1));
-        searchBox.sendKeys(searchText.substring(searchText.length() - 1));
+        searchBox.sendKeys(searchText);
+        waitForSearchResults(searchText);
+    }
+
+    private void waitForSearchResults(final String searchText) {
+        webDriverWait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                return (Boolean) js.executeScript("return (search.helper.lastResults._state.query == '" + searchText + "');");
+            }
+        });
     }
 }
