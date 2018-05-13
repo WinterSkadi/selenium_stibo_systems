@@ -9,8 +9,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleSearchPage extends BasePage {
-    private static final By inputBox = By.id("lst-ib");
-    private static final By submitButton = By.name("btnK");
+    private static final By INPUT_BOX = By.id("lst-ib");
+    private static final By SUBMIT_BUTTON = By.name("btnK");
 
     public GoogleSearchPage(final WebDriver driver, final WebDriverWait webDriverWait, final FluentWait fluentWait) {
         super(driver, webDriverWait, fluentWait);
@@ -23,13 +23,13 @@ public class GoogleSearchPage extends BasePage {
     }
 
     private void fillGoogleSearchInput(final String inputText) {
-        WebElement googleSearchInput = webDriverWait.until(ExpectedConditions.elementToBeClickable(inputBox));
+        WebElement googleSearchInput = webDriverWait.until(ExpectedConditions.elementToBeClickable(INPUT_BOX));
         googleSearchInput.click();
         googleSearchInput.sendKeys(inputText + Keys.TAB);
     }
 
     private void submitSearch() {
-        WebElement searchSubmitButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(submitButton));
+        WebElement searchSubmitButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(SUBMIT_BUTTON));
         searchSubmitButton.click();
     }
 }

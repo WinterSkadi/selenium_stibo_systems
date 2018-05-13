@@ -8,14 +8,14 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleSearchResultsPage extends BasePage {
-    private static final By searchResult = By.xpath("//a[text() = 'Stibo Systems - Business-first data management solutions' and @href='https://www.stibosystems.com/']");
+    private static final By SEARCH_RESULT_LINK = By.xpath("//a[text() = 'Stibo Systems - Business-first data management solutions' and @href='https://www.stibosystems.com/']");
 
     public GoogleSearchResultsPage(final WebDriver driver, final WebDriverWait webDriverWait, final FluentWait fluentWait) {
         super(driver, webDriverWait, fluentWait);
     }
 
     public StiboSystemsHomePage navigateToStiboSystemsWebsite() {
-        WebElement googleSearchResult = webDriverWait.until(ExpectedConditions.elementToBeClickable(searchResult));
+        WebElement googleSearchResult = webDriverWait.until(ExpectedConditions.elementToBeClickable(SEARCH_RESULT_LINK));
         googleSearchResult.click();
         return new StiboSystemsHomePage(driver, webDriverWait, fluentWait);
     }
