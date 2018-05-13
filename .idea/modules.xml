@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/selenium_stibo_systems.iml" filepath="$PROJECT_DIR$/selenium_stibo_systems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/interview_scenarios.iml" filepath="$PROJECT_DIR$/interview_scenarios.iml" />
     </modules>
   </component>
 </project>

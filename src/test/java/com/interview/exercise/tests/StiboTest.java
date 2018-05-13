@@ -64,6 +64,6 @@ public class StiboTest extends BaseTest {
 
     @AfterAll
     public void clean() {
-        closeCurrentTab();
+        driver.quit();
     }
 }
