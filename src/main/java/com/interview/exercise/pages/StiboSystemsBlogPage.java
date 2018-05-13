@@ -34,14 +34,14 @@ public class StiboSystemsBlogPage extends BasePage {
     }
 
     public LinkedInSignUpPage clickLinkedInIcon() {
-        WebElement linkedInIconButton = driver.findElement(linkedInIcon);
+        WebElement linkedInIconButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(linkedInIcon));
         linkedInIconButton.click();
 
         return new LinkedInSignUpPage(driver, webDriverWait, fluentWait);
     }
 
     public String getIncorrectEmailFormatErrorMessage() {
-        return driver.findElement(invalidEmailMessageText).getText();
+        return webDriverWait.until(ExpectedConditions.elementToBeClickable(invalidEmailMessageText)).getText();
     }
 
     public String getCorrectEmailFormatErrorMessage() {

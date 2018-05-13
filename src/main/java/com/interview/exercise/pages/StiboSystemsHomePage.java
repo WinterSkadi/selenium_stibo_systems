@@ -17,7 +17,7 @@ public class StiboSystemsHomePage extends BasePage {
         driver.getWindowHandles();
     }
 
-    public StiboSystemsHomePage searchText() throws InterruptedException {
+    public StiboSystemsHomePage searchText() {
         clickSearchIcon();
         searchSpecifiedText();
         return this;
@@ -36,11 +36,11 @@ public class StiboSystemsHomePage extends BasePage {
     }
 
     public int getAboutUsSearchPageNumber() {
-        return Integer.parseInt(driver.findElement(currentResultPageNumber).getText());
+        return Integer.parseInt(webDriverWait.until(ExpectedConditions.elementToBeClickable(currentResultPageNumber)).getText());
     }
 
     public StiboSystemsAboutUsPage goToAboutPage() {
-        driver.findElement(aboutUsResult).click();
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(aboutUsResult)).click();
         return new StiboSystemsAboutUsPage(driver, webDriverWait, fluentWait);
     }
 

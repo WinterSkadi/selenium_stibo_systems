@@ -3,6 +3,7 @@ package com.interview.exercise.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,7 +15,7 @@ public class GoogleSearchResultsPage extends BasePage {
     }
 
     public StiboSystemsHomePage navigateToStiboSystemsWebsite() {
-        WebElement googleSearchResult = driver.findElement(searchResult);
+        WebElement googleSearchResult = webDriverWait.until(ExpectedConditions.elementToBeClickable(searchResult));
         googleSearchResult.click();
         return new StiboSystemsHomePage(driver, webDriverWait, fluentWait);
     }

@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,13 +23,13 @@ public class GoogleSearchPage extends BasePage {
     }
 
     private void fillGoogleSearchInput(final String inputText) {
-        WebElement googleSearchInput = driver.findElement(inputBox);
+        WebElement googleSearchInput = webDriverWait.until(ExpectedConditions.elementToBeClickable(inputBox));
         googleSearchInput.click();
         googleSearchInput.sendKeys(inputText + Keys.TAB);
     }
 
     private void submitSearch() {
-        WebElement searchSubmitButton = driver.findElement(submitButton);
+        WebElement searchSubmitButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(submitButton));
         searchSubmitButton.click();
     }
 }
