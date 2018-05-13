@@ -8,12 +8,13 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StiboSystemsBlogPage extends BasePage {
-    private static final By popUpWindow = By.cssSelector("div[class=leadin-preview-wrapper]");
-    private static final By popUpWindowClose = By.cssSelector("div[class=leadinModal-close]");
     private static final By emailInputBox = By.xpath("//input[contains(@class, 'hs-input') and @type = 'email' and @name = 'email']");
     private static final By sendButton = By.xpath("//input[@value = 'Send' and @class = 'hs-button primary large']");
     private static final By invalidEmailMessageText = By.xpath("//ul[@class = 'hs-error-msgs inputs-list']/li/label");
     private static final By correctEmailMessageText = By.xpath("//div[@class = 'submitted-message']");
+    private static final By linkedInIcon = By.cssSelector("a[class=icon-linkedin]");
+    private static final By seeAllCategoriesButton = By.xpath("//a[@class= 'filter-expand-link']");
+    private static final By selectCategoryButton = By.xpath("//a[text() = 'Customer Master Data Management (CMDM)']");
 
 
     public StiboSystemsBlogPage(final WebDriver driver, final WebDriverWait webDriverWait, final FluentWait fluentWait) {
@@ -26,15 +27,29 @@ public class StiboSystemsBlogPage extends BasePage {
         return this;
     }
 
+    public StiboSystemsBlogPage expandAllCategoriesListAndClickOnCategory() {
+        seeAllCategories();
+        selectCategory();
+        return this;
+    }
+
+    public LinkedInSignUpPage clickLinkedInIcon() {
+        WebElement linkedInIconButton = driver.findElement(linkedInIcon);
+        linkedInIconButton.click();
+
+        return new LinkedInSignUpPage(driver, webDriverWait, fluentWait);
+    }
+
     public String getIncorrectEmailFormatErrorMessage() {
         return driver.findElement(invalidEmailMessageText).getText();
     }
 
     public String getCorrectEmailFormatErrorMessage() {
-        WebElement subsctribingSuccesfullMessage = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(correctEmailMessageText));
-        String value = subsctribingSuccesfullMessage.getText();
+        WebElement subscribingSuccesfullMessage = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(correctEmailMessageText));
+        String value = subscribingSuccesfullMessage.getText();
         return value;
     }
+
 
     private void fillInputWithEmail(String email) {
         WebElement inputEmail = webDriverWait.until(ExpectedConditions.elementToBeClickable(emailInputBox));
@@ -48,6 +63,12 @@ public class StiboSystemsBlogPage extends BasePage {
         submitButton.click();
     }
 
-    private void closePopUpWindow() {
+    private void seeAllCategories() {
+        WebElement seeAllCategories = webDriverWait.until(ExpectedConditions.elementToBeClickable(seeAllCategoriesButton));
+        seeAllCategories.click();
+    }
+    private void selectCategory(){
+        WebElement chooseCategory = webDriverWait.until(ExpectedConditions.elementToBeClickable(selectCategoryButton));
+        chooseCategory.click();
     }
 }
