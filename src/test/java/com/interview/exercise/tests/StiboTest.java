@@ -43,6 +43,7 @@ public class StiboTest extends BaseTest {
         Assertions.assertTrue(stiboSystemsAboutUsPage.existsFacebookIcon(), "Facebook icon exists on About Us page");
         StiboSystemsBlogPage stiboSystemsBlogPage = stiboSystemsAboutUsPage.goToToBlogPage();
 
+        stiboSystemsBlogPage.checkAgreements();
         stiboSystemsBlogPage.fillEmailInputBoxAndSend(INCORRECT_EMAIL_INPUT);
         String invalidEmailFormatMessage = stiboSystemsBlogPage.getIncorrectEmailFormatErrorMessage();
         System.out.println("Validation error message: " + invalidEmailFormatMessage);

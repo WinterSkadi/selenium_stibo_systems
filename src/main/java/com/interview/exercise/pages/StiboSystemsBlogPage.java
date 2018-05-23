@@ -11,10 +11,12 @@ public class StiboSystemsBlogPage extends BasePage {
     private static final By EMAIL_INPUT_BOX = By.xpath("//input[contains(@class, 'hs-input') and @type = 'email' and @name = 'email']");
     private static final By SEND_BUTTON = By.xpath("//input[@value = 'Send' and @class = 'hs-button primary large']");
     private static final By INVALID_EMAIL_MESSAGE_TEXT = By.xpath("//ul[@class = 'hs-error-msgs inputs-list']/li/label");
-    private static final By CORRECT_EMAIL_MESSAGE_TEXT = By.xpath("//div[@class = 'submitted-message']");
+    private static final By CORRECT_EMAIL_MESSAGE_TEXT = By.xpath("//div[contains(@class,'submitted-message')]");
     private static final By LINKED_IN_ICON_LINK_BUTTON = By.cssSelector("a[class=icon-linkedin]");
     private static final By SEE_ALL_CATEGORIES_BUTTON = By.xpath("//a[@class= 'filter-expand-link']");
     private static final By CMDM_CATEGORY_LINK = By.xpath("//a[text() = 'Customer Master Data Management (CMDM)']");
+    private static final By FIRST_AGREEMENT_CHECKBOX = By.xpath("//input[contains(@id, 'by_signing')]");
+    private static final By SECOND_AGREEMENT_CHECKBOX = By.xpath("//input[contains(@id, 'by_signing1')]");
 
 
     public StiboSystemsBlogPage(final WebDriver driver, final WebDriverWait webDriverWait, final FluentWait fluentWait) {
@@ -33,9 +35,15 @@ public class StiboSystemsBlogPage extends BasePage {
         return this;
     }
 
-    public StiboSystemsBlogPage clickOnCMDMCategory(){
+    public StiboSystemsBlogPage clickOnCMDMCategory() {
         WebElement chooseCategory = webDriverWait.until(ExpectedConditions.elementToBeClickable(CMDM_CATEGORY_LINK));
         chooseCategory.click();
+        return this;
+    }
+
+    public StiboSystemsBlogPage checkAgreements() {
+        clickFirstAgreementCheckbox();
+        clickSecondAgreementCheckbox();
         return this;
     }
 
@@ -65,5 +73,15 @@ public class StiboSystemsBlogPage extends BasePage {
     private void send() {
         WebElement submitButton = webDriverWait.until(ExpectedConditions.elementToBeClickable(SEND_BUTTON));
         submitButton.click();
+    }
+
+    private void clickFirstAgreementCheckbox() {
+        WebElement firstAgreementcheckbox = webDriverWait.until(ExpectedConditions.elementToBeClickable(FIRST_AGREEMENT_CHECKBOX));
+        firstAgreementcheckbox.click();
+    }
+
+    private void clickSecondAgreementCheckbox() {
+        WebElement secondAgreementCheckbox = webDriverWait.until(ExpectedConditions.elementToBeClickable(SECOND_AGREEMENT_CHECKBOX));
+        secondAgreementCheckbox.click();
     }
 }

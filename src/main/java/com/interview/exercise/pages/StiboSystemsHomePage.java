@@ -23,7 +23,7 @@ public class StiboSystemsHomePage extends BasePage {
     }
 
     public int getSearchResultCount() {
-        WebElement searchResultsBox = webDriverWait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(NUMBER_OF_SEARCH_RESULTS)));
+        WebElement searchResultsBox = webDriverWait.until(ExpectedConditions.elementToBeClickable(NUMBER_OF_SEARCH_RESULTS));
         String resultsText = searchResultsBox.getText();
         final String whiteSpace = " ";
         String resultsCount = resultsText.split(whiteSpace)[0];
@@ -73,10 +73,12 @@ public class StiboSystemsHomePage extends BasePage {
 
     private void waitForSearchResults(final String searchText) {
         webDriverWait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                JavascriptExecutor js = (JavascriptExecutor) driver;
-                return (Boolean) js.executeScript("return (search.helper.lastResults._state.query == '" + searchText + "');");
-            }
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                    JavascriptExecutor js = (JavascriptExecutor) driver;
+                    return (Boolean) js.executeScript("return (search.helper.lastResults._state.query == '" + searchText + "');");
+                }
+
         });
     }
 }
